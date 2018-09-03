@@ -55,7 +55,11 @@ var options = {
 
 var timer; // secondly pinging until connects to server after sending request
 
-checkCredentials();
+// Configures options for https request
+function configureOptions(path, method) {
+	options['path'] = path;
+	options['method'] = method;
+}
 
 // Checks credentials
 function checkCredentials() {
@@ -63,17 +67,11 @@ function checkCredentials() {
 	https.get(options, (res) => {
 		if (res.statusCode != 200) {
 			dialogs.alert("Invalid credentials");
-		} else {
-			dialogs.alert("YAY!");
 		}
 	});
 }
 
-// Configures options for https request
-function configureOptions(path, method) {
-	options['path'] = path;
-	options['method'] = method;
-}
+checkCredentials();
 
 ////////////////////////
 /* PINGING THE SERVER */
