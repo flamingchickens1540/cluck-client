@@ -1,0 +1,57 @@
+<html lang="en">
+  <head>
+    <title>Time Clock</title>
+    <script type='text/javascript' src='script.js'></script>
+    <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <link href="Anonymous_Pro/stylesheet.css" rel="stylesheet">
+    <style>
+    	.btn-large {
+    		position:absolute;
+    		width:40%;
+    		height:40%;
+    		font-size:80;
+    	}
+      .btn {
+        color: white;
+        font-family:"Anonymous Pro";
+      }
+    	.key {
+    		position:absolute;
+    		width:14%;
+    		height:16%;
+    		font-size:50;
+    		background-color:#d0d3d8;
+    	}
+      p {
+        font-family:"Anonymous Pro";
+      }
+    </style>
+  </head>
+  <body>
+    <div hidden style="text-align:center" class="error">
+      <p style="color:white;display:block;font-size:50px">Cannot connect to the server. Check to see if your wifi is on. If you need help, contact Dylan Smith or Zachary Robinson.</p>
+    </div>
+  	<div style="text-align:center" class="home">
+      <p style="display:block;margin-top:10%;font-size:50px" id="userMessage"></p>
+  		<input style="left:7%;top:30%" type="button" class="login btn btn-large btn-info" value="Log In"></input>
+  		<input style="right:7%;top:30%" type="button" class="logout btn btn-large btn-warning" value="Log Out"></input>
+  	</div>
+  	<div style="text-align:center" hidden class="input">
+  		<p class="numDisplay" style="font-size:80px"></p>
+  		<input style="left:25%;top:19%" type="button" class="btn key num" value="1"></input>
+  		<input style="left:43%;top:19%" type="button" class="btn key num" value="2"></input>
+  		<input style="left:61%;top:19%" type="button" class="btn key num" value="3"></input>
+  		<input style="left:25%;top:39%" type="button" class="btn key num" value="4"></input>
+  		<input style="left:43%;top:39%" type="button" class="btn key num" value="5"></input>
+  		<input style="left:61%;top:39%" type="button" class="btn key num" value="6"></input>
+  		<input style="left:25%;top:59%" type="button" class="btn key num" value="7"></input>
+  		<input style="left:43%;top:59%" type="button" class="btn key num" value="8"></input>
+  		<input style="left:61%;top:59%" type="button" class="btn key num" value="9"></input>
+  		<input style="left:25%;top:79%;background-color:rgb(42,187,86)" type="button" class="btn key ok" value="OK"></input>
+  		<input style="left:43%;top:79%" type="button" class="btn key num" value="0"></input>
+  		<input style="left:61%;top:79%;background-color:rgb(237,99,92)" type="button" class="btn key del" value="Del"></input>
+  		<input style="position:absolute;right:3%;top:3%;font-size:15;width:100;height:60;border:1px solid black;color:black;background-color:rgb(3,155,229)" type="button" class="btn cancel" value="Cancel"></input>
+  	</div>
+  </body>
+</html>

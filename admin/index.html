@@ -1,0 +1,59 @@
+<html lang="en">
+  <head>
+    <title>Time Clock Admin</title>
+    <script type='text/javascript' src='script.js'></script>
+    <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="node_modules/tether/dist/js/tether.min.js"></script>
+    <style>
+      .highlight {
+        background-color: #f7ef56;
+        color: black;
+      }
+      .highlight:hover {
+        background-color: #d1ca49;
+        color: black;
+      }
+      p {
+        font-family:"Anonymous Pro";
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      window.jQuery = window.$ = require('jquery');
+      var Popper = require("popper.js");
+    </script>
+  	<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <br/>
+    <div style="text-align:center" class="errorScreen">
+      <p style="color:white;display:block;font-size:50px">Cannot connect to the server. Check to see if your wifi is on. If you need help, contact Dylan Smith or Zachary Robinson.</p>
+    </div>
+    <div class="home">
+      <div>
+        <input style="margin-left:10px" type="button" class="btn btn-success addUser" value="Add User"></input>
+        <input type="button" onclick="setSort('name')" class="btn btn-info sort sort-name highlight" value="Sort By Name"></input>
+        <input type="button" onclick="setSort('lastEventTime')" class="btn btn-info sort sort-lastEventTime" value="Sort By Status"></input>
+        <input type="button" class="btn" value="Sort By Hours" disabled></input>
+        <input type="button" class="btn btn-primary refresh" value="Refresh"></input>
+      </div>
+      <br/>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">ID</th>
+            <th scope="col">Email</th>
+            <th scope="col">Status</th>
+            <th scope="col">Clock</th>
+            <th scope="col">Void</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Remove</th>
+          </tr>
+        </thead>
+        <tbody class="table-body">
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

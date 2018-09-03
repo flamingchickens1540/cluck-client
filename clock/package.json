@@ -1,0 +1,21 @@
+{
+  "name": "electron-app",
+  "version": "1.0.0",
+  "description": "This is a description.",
+  "main": "main.js",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "dialogs": "^1.1.20",
+    "https": "^1.0.0",
+    "jquery": "^3.2.1",
+    "say": "^0.13.0"
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^0.35.2"
+  },
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "author": "Flaming Chickens 1540",
+  "license": "ISC"
+}
