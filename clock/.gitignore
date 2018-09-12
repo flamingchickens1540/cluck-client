@@ -78,3 +78,6 @@ sounds/
 
 # Credentials 
 credentials.json
+
+# Server Address and Port
+server.json
