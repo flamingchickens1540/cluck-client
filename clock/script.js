@@ -35,12 +35,7 @@ var speak = true;
 // Sets credentials
 var credentials = JSON.parse(fs.readFileSync("credentials.json"));
 
-// HTTPS relevant information
-var serverAddress = "server.hobbes.io";
-var serverPort = 8443;
-var processingTime = 0; // time it takes to connect to server
-var messageTime = 0; // how long message has been displayed
-var messageTimer; // the thread that updates messageTime
+var concurrentPinger;
 
 // Default options
 var options = {
@@ -53,31 +48,19 @@ var options = {
 	}
 }
 
+// HTTPS relevant information
+var serverAddress = "localhost";
+var serverPort = 8443;
+
+var processingTime = 0; // time it takes to connect to server
+var messageTime = 0; // how long message has been displayed
+var messageTimer; // the thread that updates messageTime
+
 var timer; // secondly pinging until connects to server after sending request
-
-// Configures options for https request
-function configureOptions(path, method) {
-	options['path'] = path;
-	options['method'] = method;
-}
-
-// Checks credentials
-function checkCredentials() {
-	configureOptions("/authtest", "GET");
-	https.get(options, (res) => {
-		if (res.statusCode != 200) {
-			dialogs.alert("Invalid credentials");
-		}
-	});
-}
-
-checkCredentials();
 
 ////////////////////////
 /* PINGING THE SERVER */
 ////////////////////////
-
-var concurrentPinger = setInterval(ping, 3000);
 
 // Pings the server
 function ping() {
@@ -101,9 +84,9 @@ function ping() {
 	});
 }
 
-/////////////////////////////
-/* MISCELLANEOUS THREADING */
-/////////////////////////////
+///////////////////////////////////////
+/* MISCELLANEOUS THREADING FUNCTIONS */
+///////////////////////////////////////
 
 function checkTime() {
 	if (processingTime == 5) {
@@ -140,11 +123,55 @@ function playSound(src) {
 	effect.play();
 }
 
+// Configures options for https request
+function configureOptions(path, method) {
+	options['path'] = path;
+	options['method'] = method;
+}
+
+// Checks credentials
+function checkCredentials() {
+	configureOptions("/authtest", "GET");
+	https.get(options, (res) => {
+		if (res.statusCode != 200) {
+			dialogs.alert("Invalid credentials");
+		}
+	});
+}
+
 //////////////////////////////
 /* BUTTON ONCLICK FUNCTIONS */
 //////////////////////////////
 
 $(document).ready(function(){
+	if (fs.existsSync("server.json")) {
+		var serverInfo = JSON.parse(fs.readFileSync("server.json"));
+		serverAddress = serverInfo["address"];
+		serverPort = serverInfo["port"];
+		options["hostname"] = serverAddress;
+		options["port"] = serverPort;
+		checkCredentials();
+		concurrentPinger = setInterval(ping, 3000);
+	} else {
+		var serverInfo = {"address":"localhost","port":8443};
+		dialogs.prompt("What is the name of the server?", "", function(address) {
+			if (address != undefined && address != null) {
+				serverAddress = address;
+				serverInfo["address"] = address;
+				options["hostname"] = address;
+				dialogs.prompt("What port is the server?", "", function(port) {
+					if (port != undefined && port != null) {
+						serverPort = port;
+						serverInfo["port"] = port;
+						options["port"] = port;
+						checkCredentials();
+						concurrentPinger = setInterval(ping, 3000);
+						fs.writeFileSync("server.json", JSON.stringify(serverInfo));
+					}
+				});
+			}
+		});
+	}
 	// btn-large are the two home-screen buttons.
 	// when either button is pressed, the home screen disappears and the keypad appears
 	$(".btn-large").click(function(){

@@ -11,7 +11,11 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 // Package that allows me to contact the server
 var https = require("https");
 
-var serverAddress = "server.hobbes.io";
+// Package for alerts
+var dialogs = require("dialogs")(opts={})
+
+// https information
+var serverAddress = "localhost";
 var serverPort = 8443;
 
 // File system reader
@@ -34,11 +38,8 @@ var options = {
 	}
 }
 
-checkCredentials();
-
 // Timer for re-checking data
-var pinger = setInterval(getData, 10000);
-getData();
+var pinger;
 
 // Checks credentials
 function checkCredentials() {
@@ -107,3 +108,36 @@ function getData() {
 function checkTime() {
 	console.log($(".names-1").html());
 }
+
+$(document).ready(function(){
+	if (fs.existsSync("server.json")) {
+		var serverInfo = JSON.parse(fs.readFileSync("server.json"));
+		serverAddress = serverInfo["address"];
+		serverPort = serverInfo["port"];
+		options["hostname"] = serverAddress;
+		options["port"] = serverPort;
+		checkCredentials();
+		getData();
+		pinger = setInterval(getData, 10000);
+	} else {
+		var serverInfo = {"address":"localhost","port":8443};
+		dialogs.prompt("What is the name of the server?", "", function(address) {
+			if (address != undefined && address != null) {
+				serverAddress = address;
+				serverInfo["address"] = address;
+				options["hostname"] = address;
+				dialogs.prompt("What port is the server?", "", function(port) {
+					if (port != undefined && port != null) {
+						serverPort = port;
+						serverInfo["port"] = port;
+						options["port"] = port;
+						checkCredentials();
+						getData();
+						pinger = setInterval(getData, 10000);
+						fs.writeFileSync("server.json", JSON.stringify(serverInfo));
+					}
+				});
+			}
+		});
+	}
+});

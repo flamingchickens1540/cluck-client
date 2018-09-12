@@ -20,7 +20,7 @@ var addUserName = "Flaming Chicken";
 var addUserID = "1540";
 var addUserEmail = "1540photo@gmail.com"
 
-var serverAddress = "server.hobbes.io";
+var serverAddress = "localhost";
 var serverPort = 8443;
 
 var users = []
@@ -40,8 +40,6 @@ var options = {
 	}
 }
 
-checkCredentials();
-
 ////////////////////////
 /* PINGING THE SERVER */
 ////////////////////////
@@ -49,8 +47,6 @@ checkCredentials();
 // Whether or not you can connect to the server.
 // If you have lost wifi, or the server is down, this will be false.
 var connected = true;
-
-var concurrentPinger = setInterval(ping, 3000);
 
 // Checks credentials
 function checkCredentials() {
@@ -271,6 +267,34 @@ function validateEmail(email) {
 }
 
 $(document).ready(function(){
+	if (fs.existsSync("server.json")) {
+		var serverInfo = JSON.parse(fs.readFileSync("server.json"));
+		serverAddress = serverInfo["address"];
+		serverPort = serverInfo["port"];
+		options["hostname"] = serverAddress;
+		options["port"] = serverPort;
+		checkCredentials();
+		concurrentPinger = setInterval(ping, 3000);
+	} else {
+		var serverInfo = {"address":"localhost","port":8443};
+		dialogs.prompt("What is the name of the server?", "", function(address) {
+			if (address != undefined && address != null) {
+				serverAddress = address;
+				serverInfo["address"] = address;
+				options["hostname"] = address;
+				dialogs.prompt("What port is the server?", "", function(port) {
+					if (port != undefined && port != null) {
+						serverPort = port;
+						serverInfo["port"] = port;
+						options["port"] = port;
+						checkCredentials();
+						concurrentPinger = setInterval(ping, 3000);
+						fs.writeFileSync("server.json", JSON.stringify(serverInfo));
+					}
+				});
+			}
+		});
+	}
 	$(".errorScreen").hide();
 	refresh();
 	$(".refresh").click(function(){
