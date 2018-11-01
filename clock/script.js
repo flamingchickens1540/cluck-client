@@ -287,7 +287,7 @@ $(document).ready(function(){
 					/* SPEAKING (TTS) */
 					////////////////////
 
-					// speak is a boolean of whether or not we want to the cpu to speak
+					/*// speak is a boolean of whether or not we want to the cpu to speak
 					if (speak) {
 
 						var introduction = "Goodbye, ";
@@ -313,7 +313,7 @@ $(document).ready(function(){
 							// speaks the introduction, and then the person's first name
 							say.speak(introduction + firstName, "Samantha");
 						}
-					}
+					}*/
 
 					// DISPLAYING THE MESSAGE on the HOME SCREEN
 

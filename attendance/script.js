@@ -97,8 +97,8 @@ function getData() {
 				} else if (numMembers > 18) {
 					num = 2;
 				}
-				$(".names-" + num).append(`<span style="font-size:20px;font-family:Norwester">` + person + `</span><br>`)
-				$(".times-" + num).append(`<span style="font-size:20px;font-family:Norwester">` + time + `</span><br>`)
+				$(".names-" + num).append(`<span style="font-size:20px;font-family:Lato">` + person + `</span><br>`)
+				$(".times-" + num).append(`<span style="font-size:20px;font-family:Lato">` + time + `</span><br>`)
 			}
 		});
 	});

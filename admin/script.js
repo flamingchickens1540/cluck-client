@@ -1,11 +1,6 @@
 // Time Clock Admin
 // Written by Dylan Smith
 
-// To Do:
-// Credential Management
-// Reset Button
-// Documentation
-
 window.$ = window.jQuery = require("jquery");
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -114,6 +109,7 @@ function clock(id, clockingIn) {
 	});
 }
 
+/* Clocks out a user without adding hours to their total */
 function nullify(name, id) {
 	dialogs.confirm("Are you sure you want to clock out " + name + " (" + id + ") without incrementing their hour total?", function(ok) {
 		if (ok) {
@@ -329,6 +325,7 @@ $(document).ready(function(){
 													console.log("YOU GOT BAD CREDS");
 												} else if (res.statusCode == 200) {
 													console.log("GOOD BOI");
+													refresh();
 												}
 											});
 										}
