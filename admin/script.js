@@ -296,6 +296,23 @@ $(document).ready(function(){
 	$(".refresh").click(function(){
 		refresh();
 	});
+	// gets all users, and creates a scouts.json file
+	$(".scouts").click(function() {
+		configureOptions("/admin/allusers", "GET");
+		https.get(options, (res) => {
+			if (res.statusCode == 200) {
+				res.on('data', (d) => {
+					scouts = {} // what will become scouts.json
+					users = JSON.parse(d)["users"];
+					for (u in users) {
+						user = users[u];
+						scouts[user["id"]] = user["name"];
+					}
+					fs.writeFileSync("scouts.json", JSON.stringify(scouts)); // creates file
+				});
+			}
+		});
+	});
 	$(".addUser").click(function(){
 		dialogs.prompt("Enter a name.", function(name){
 			if (name != undefined && name != "") {
@@ -320,11 +337,10 @@ $(document).ready(function(){
 												console.log(res.statusCode);
 												// if the status is 404, we alert 'Invalid ID', clear the timer thread, and return
 												if (res.statusCode == 400) {
-													console.log("YOU GOOFY DOG!");
+													console.log("An error occured.");
 												} else if (res.statusCode == 401) {
-													console.log("YOU GOT BAD CREDS");
+													console.log("You have bad credentials.");
 												} else if (res.statusCode == 200) {
-													console.log("GOOD BOI");
 													refresh();
 												}
 											});

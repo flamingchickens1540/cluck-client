@@ -73,8 +73,11 @@ typings/
 # Serverless directories
 .serverless
 
-# Credentials 
+# Credentials
 credentials.json
 
 # Server Address and Port
 server.json
+
+# Scouts
+scouts.json
