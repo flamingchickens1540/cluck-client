@@ -16,8 +16,6 @@ var fs = require("fs");
 var exec = require("child_process").exec;
 // Package that allows me to contact the server
 var https = require("https");
-// Allows for text-to-speech (on Mac OS, I have yet to test on Windows, but it should work.)
-var say = require('say');
 
 // Whether or not you can connect to the server.
 // If you have lost wifi, or the server is down, this will be false.
@@ -28,9 +26,6 @@ var clockingIn = null;
 
 // current ID that the user is typing in.
 var userID = "";
-
-// whether or not we want the cpu to speak whenever someone clocks in/out
-var speak = true;
 
 // Sets credentials
 var credentials = JSON.parse(fs.readFileSync("credentials.json"));
@@ -282,38 +277,6 @@ $(document).ready(function(){
 
 					var firstName = name.split(" ")[0]; // e.g. dean
 					var nameAddress = name.replace(" ", ""); // e.g. deankamen
-
-					////////////////////
-					/* SPEAKING (TTS) */
-					////////////////////
-
-					/*// speak is a boolean of whether or not we want to the cpu to speak
-					if (speak) {
-
-						var introduction = "Goodbye, ";
-						if (clockingIn) { introduction = "Hello, " }
-
-						// searches for .mp3 or .wav files in the SOUNDS folder.
-						// a file will be here (e.g. deankamen.mp3)
-						// this file will be of someone saying Dean Kamen's name.
-						// this is for if people don't like how the Text-To-Speech pronounces their name
-						var sound = null;
-						if (fs.existsSync("sounds/" + nameAddress + ".wav")) {
-							sound = "sounds/" + nameAddress + ".wav";
-						} else if (fs.existsSync("sounds/" + nameAddress + ".mp3")) {
-							sound = "sounds/" + nameAddress + ".mp3";
-						}
-
-						// if sound is null, they have not submitted a sound file, and the TTS will attempt to pronounce their name
-						// Samantha is the voice we use
-						if (sound != null) {
-							// speaks the introduction, and then plays the sound file as a callback
-							say.speak(introduction, "Samantha", 1.0, playSound(sound));
-						} else {
-							// speaks the introduction, and then the person's first name
-							say.speak(introduction + firstName, "Samantha");
-						}
-					}*/
 
 					// DISPLAYING THE MESSAGE on the HOME SCREEN
 
