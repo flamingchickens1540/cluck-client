@@ -93,8 +93,10 @@ function checkTime() {
 
 // This function checks to see if messageTime has surpassed 3, in which the home screen message should disappear.
 function checkMessageTime() {
-	if (messageTime > 3) {
+	if (messageTime > 1) {
 		$("#userMessage").text("");
+		messageTime = 0;
+		clearTimeout(messageTimer);
 	}
 	messageTime += 1;
 }
