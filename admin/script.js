@@ -3,6 +3,9 @@
 
 window.$ = window.jQuery = require("jquery");
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+process.on('uncaughtException', function (err) {
+    console.log(err);
+});
 
 // Package for alerts
 var dialogs = require("dialogs")(opts={})
@@ -34,6 +37,8 @@ var options = {
 		'Authorization': 'Basic ' + new Buffer(credentials['username']+':'+credentials['password']).toString('base64')
 	}
 }
+
+var next_user_id;
 
 ////////////////////////
 /* PINGING THE SERVER */
@@ -101,7 +106,6 @@ function sortUsersBy(users, value) {
 function clock(id, clockingIn) {
 	configureOptions("/clockapi/clock?user=" + id + "&clockingIn=" + clockingIn, 'POST');
 	https.get(options, (res) => {
-		console.log(res.statusCode);
 		if (res.statusCode != 200) {
 			dialogs.alert("Something went wrong.");
 		}
@@ -256,6 +260,22 @@ function refresh() {
 	});
 }
 
+// finds a valid ID for when creating a user
+function findValidID() {
+	// gets a random ID 0 to 9999
+	var userID = Math.floor(Math.random() * 9999);
+	configureOptions("/clockapi/name?id=" + userID, "GET");
+	https.get(options, (res) => {
+		// not a valid ID, which means this can be a new ID
+		if (res.statusCode == 404) {
+			console.log(userID);
+			next_user_id = userID;
+		} else {
+			findValidID();
+		}
+	});
+}
+
 // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
 function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -317,7 +337,8 @@ $(document).ready(function(){
 		dialogs.prompt("Enter a name.", function(name){
 			if (name != undefined && name != "") {
 				addUserName = name;
-				dialogs.prompt("Enter an ID.", function(id) {
+				console.log(next_user_id);
+				dialogs.prompt("Enter an ID.", next_user_id, function(id) {
 					if (id != undefined && id.length >= 1 && id.length <= 4) {
 						valid = true;
 						for (var i = 0; i < id.length; i++) {
@@ -341,6 +362,7 @@ $(document).ready(function(){
 												} else if (res.statusCode == 401) {
 													console.log("You have bad credentials.");
 												} else if (res.statusCode == 200) {
+													findValidID();
 													refresh();
 												}
 											});
@@ -354,4 +376,5 @@ $(document).ready(function(){
 			}
 		});
 	});
+	findValidID();
 });
