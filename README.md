@@ -1,6 +1,6 @@
-# Common Lab Use Clock Kit (CLUCK)
+# Chungus Lab Use Clock Kit (CLUCK)
 
-This is the client for the Common Lab Use Clock Kit (CLUCK) created by Dylan Smith with FRC Team 1540 The Flaming Chickens.
+This is the client for the Chungus Lab Use Clock Kit (CLUCK) created by Dylan Smith with FRC Team 1540 The Flaming Chickens.
 I will go through a detailed (or soon to be detailed) description of each app and how to set them up.
 
 ## Setup
