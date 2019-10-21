@@ -118,7 +118,7 @@ $(document).ready(function(){
 		options["port"] = serverPort;
 		checkCredentials();
 		getData();
-		pinger = setInterval(getData, 10000);
+		pinger = setInterval(getData, 1000);
 	} else {
 		var serverInfo = {"address":"localhost","port":8443};
 		dialogs.prompt("What is the name of the server?", "", function(address) {
@@ -133,7 +133,7 @@ $(document).ready(function(){
 						options["port"] = port;
 						checkCredentials();
 						getData();
-						pinger = setInterval(getData, 10000);
+						pinger = setInterval(getData, 1000);
 						fs.writeFileSync("server.json", JSON.stringify(serverInfo));
 					}
 				});

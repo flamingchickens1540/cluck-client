@@ -113,6 +113,21 @@ function clock(id, clockingIn) {
 	});
 }
 
+function resetHours() {
+  dialogs.confirm("Are you sure you want to reset hours for the season? You can still access previous hours from the Revision History on the spreadsheet.", function(ok) {
+    if (ok) {
+      configureOptions("/admin/reset", "POST");
+      https.get(options, (res) => {
+				console.log(res.statusCode);
+				if (res.statusCode != 200) {
+					dialogs.alert("Something went wrong.");
+				}
+				refresh();
+			});
+    }
+  });
+}
+
 /* Clocks out a user without adding hours to their total */
 function nullify(name, id) {
 	dialogs.confirm("Are you sure you want to clock out " + name + " (" + id + ") without incrementing their hour total?", function(ok) {
@@ -315,6 +330,9 @@ $(document).ready(function(){
 	refresh();
 	$(".refresh").click(function(){
 		refresh();
+	});
+  $(".resetHours").click(function(){
+		resetHours();
 	});
 	// gets all users, and creates a scouts.json file
 	$(".scouts").click(function() {
