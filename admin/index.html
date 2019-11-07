@@ -6,13 +6,34 @@
     <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script src="node_modules/tether/dist/js/tether.min.js"></script>
     <style>
-      .highlight {
+      /* .highlight {
         background-color: #f7ef56;
         color: black;
       }
       .highlight:hover {
         background-color: #d1ca49;
         color: black;
+      } */
+      .btn-purple {
+        background-color: #aa66cc;
+        color:white;
+      }
+      .btn-purple:hover,
+      .btn-purple:focus {
+        color: white;
+        background-color: #9933CC;
+      }
+      .btn-moss {
+        background-color: #a1887f;
+        color: white;
+      }
+      .btn-moss:hover,
+      .btn-moss:focus {
+        color: white;
+        background-color: #795548;
+      }
+      .btn-secondary:hover, .btn-secondary:focus {
+        color: white;
       }
     </style>
   </head>
@@ -29,9 +50,9 @@
     <div class="home">
       <div>
         <input style="margin-left:10px" type="button" class="btn btn-success addUser" value="Add User"></input>
-        <input type="button" onclick="setSort('name')" class="btn btn-info sort sort-name highlight" value="Sort By Name"></input>
+        <input type="button" onclick="setSort('name')" class="btn btn-moss sort sort-name" value="Sort By Name"></input>
+        <input type="button" onclick="setSort('id')" class="btn btn-purple sort sort-id" value="Sort By ID"></input>
         <input type="button" onclick="setSort('lastEventTime')" class="btn btn-info sort sort-lastEventTime" value="Sort By Status"></input>
-        <input type="button" class="btn" value="Sort By Hours" disabled></input>
         <input type="button" class="btn btn-primary refresh" value="Refresh"></input>
         <input type="button" class="btn btn-dark scouts" value="Create Scouts"></input>
         <input type="button" class="btn btn-danger resetHours" value="Reset Hours"></input>

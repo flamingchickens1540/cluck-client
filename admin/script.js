@@ -86,8 +86,8 @@ function ping() {
 
 function setSort(value) {
 	sort = value;
-	$(".sort").removeClass("highlight");
-	$(".sort-" + value).addClass("highlight");
+	// $(".sort").removeClass("highlight");
+	// $(".sort-" + value).addClass("highlight");
 	refresh();
 }
 
@@ -96,6 +96,8 @@ function sortUsersBy(users, value) {
 		if (value == "name") {
 			if (a[value] > b[value]) { return 1; }
 			else { return -1; }
+    } else if (value == "id") {
+      return parseInt(a[value]) - parseInt(b[value]);
 		} else {
 			return b[value] - a[value];
 		}
